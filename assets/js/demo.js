@@ -28,8 +28,8 @@ var DEMO = {
 		this.ms_Scene = new THREE.Scene();
 
 		this.ms_Camera = new THREE.PerspectiveCamera(55.0, WINDOW.ms_Width / WINDOW.ms_Height, 0.5, 3000000);
-		this.ms_Camera.position.set(0, Math.max(inParameters.width * 1.5, inParameters.height) / 8, -inParameters.height);
-		this.ms_Camera.lookAt(new THREE.Vector3(0, 0, 0));
+		this.ms_Camera.position.set(-inParameters.height*3, Math.max(inParameters.width*1.5, inParameters.height), 0);
+		//this.ms_Camera.lookAt({x:10000, y:10000, z:10000});
 
 		this.ms_Raycaster = new THREE.Raycaster();
 
@@ -37,7 +37,7 @@ var DEMO = {
 		this.ms_Controls = new THREE.OrbitControls(this.ms_Camera, this.ms_Renderer.domElement);
 		this.ms_Controls.userPan = false;
 		this.ms_Controls.userPanSpeed = 0.0;
-		this.ms_Controls.maxDistance = 5000.0;
+		this.ms_Controls.maxDistance = 10000.0;
 		this.ms_Controls.maxPolarAngle = Math.PI * 0.495;
 
 		// Add light
@@ -50,7 +50,7 @@ var DEMO = {
 
 		//axis helper
 
-		var axisHelper = new THREE.AxisHelper( 500 );
+		var axisHelper = new THREE.AxisHelper( 50000 );
 		this.ms_Scene.add( axisHelper );
 
 		//create playground
@@ -62,7 +62,8 @@ var DEMO = {
 			for(var i=0; i<10; i++){
 				for(var j=0;j<10;j++){
 					var pf = new THREE.Mesh( pfMesh, pfMaterial );
-					this.ms_Scene.add(pf)
+					this.ms_Scene.add(pf);
+					this.ms_Clickable.push(pf);
 					pf.rotation.x=Math.PI / 2;
 					pf.position.set(-1750+((j-4)*300),0,((i-4)*300))
 				}
@@ -71,7 +72,8 @@ var DEMO = {
 			for(var i=0; i<10; i++){
 				for(var j=0;j<10;j++){
 					var pf = new THREE.Mesh( pfMesh, pfMaterial2 );
-					this.ms_Scene.add(pf)
+					this.ms_Scene.add(pf);
+					this.ms_Clickable.push(pf);
 					pf.rotation.x=Math.PI / 2;
 					pf.position.set(1450+((j-4)*300),0,((i-4)*300))
 				}
@@ -86,6 +88,7 @@ var DEMO = {
 			for(var j=0; j<10; j++){
 				var pfEnemy = new THREE.Mesh( pfEnemyMesh, pfEnemyMaterial );
 				this.ms_Scene.add(pfEnemy)
+				this.ms_Clickable.push(pfEnemy);
 				pfEnemy.position.set(50,1350+((i-4)*300),((j-4)*300))
 			}
 		}
@@ -121,9 +124,9 @@ var DEMO = {
 		});
 
 		var lH = new Lighthouse();
-    console.log(lH)
+    //console.log(lH)
     var lHMesh = new lH.getLighthouse();
-    lHMesh.position.set(1500,50,-3000);
+    lHMesh.position.set(1500,0,-3000);
     this.ms_Scene.add(lHMesh);
 
 		// Create the water effect
@@ -186,7 +189,7 @@ var DEMO = {
 
 		var terrain = new THREE.Mesh(terrainGeo, terrainMaterial);
 		terrain.position.x = 1500;
-		terrain.position.y = - inParameters.depth * 0.4;
+		terrain.position.y = - inParameters.depth * 0.2;
 		terrain.position.z = -3000;
 		this.ms_Scene.add(terrain);
 	},

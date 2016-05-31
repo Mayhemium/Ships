@@ -10,7 +10,12 @@
 	</head>
 
 	<body>
-		<div id="panel"></div>
+		<div id="panel">
+		</div>
+            <div id="login">
+                    <input type="text" id="name"/></br>
+                    <input type="submit" value="login" onclick="document.getElementById('login').className = 'hide'; document.getElementById('panel').className = 'hide';"/>
+            </div>
 		<div id="canvas-3d" class="viewer"></div>
 
 		<!-- External libraries -->

@@ -11,10 +11,12 @@ function onDocumentMouseDown(event) {
         - ( event.clientY / window.innerHeight ) * 2 + 1 );
 
     DEMO.ms_Raycaster.setFromCamera( mouse, DEMO.ms_Camera );
-    var intersects = DEMO.ms_Raycaster.intersectObjects( DEMO.ms_Clickable );
+    var intersects = DEMO.ms_Raycaster.intersectObjects(DEMO.ms_Clickable);
+    //console.log(intersects)
 
     if (intersects.length > 0) {
-        intersects[0].object.callback();
+        //intersects[0].object.callback();
+        console.log(intersects[0])
     }
 }
 
@@ -30,7 +32,7 @@ $(function() {
 		height: 2000,
 		widthSegments: 250,
 		heightSegments: 250,
-		depth: 1500,
+		depth: 1000,
 		param: 4,
 		filterparam: 1,
 		filter: [ CIRCLE_FILTER ],
