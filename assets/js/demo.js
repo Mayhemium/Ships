@@ -56,7 +56,7 @@ var DEMO = {
 		//create playground
 
 		var pfMesh = new THREE.BoxGeometry( 300, 300, 25 );
-		var pfMaterial = new THREE.MeshBasicMaterial( {color: 0x0000ff, side: THREE.DoubleSide, wireframe: true} );
+		var pfMaterial = new THREE.MeshBasicMaterial( {color: 0xffffff, side: THREE.DoubleSide, wireframe: true} );
 		var pfMaterial2 = new THREE.MeshBasicMaterial( {color: 0xffffff, side: THREE.DoubleSide, wireframe: true} );
 
 			for(var i=0; i<10; i++){
@@ -77,7 +77,7 @@ var DEMO = {
 				}
 			}
 
-		var pfEnemyMesh = new THREE.BoxGeometry( 100, 100, 100 );
+		var pfEnemyMesh = new THREE.BoxGeometry( 100, 300, 300 );
 		var pfEnemyMaterial = new THREE.MeshPhongMaterial({side: THREE.DoubleSide, map: THREE.ImageUtils.loadTexture('assets/img/wood.jpg') });
 
 
@@ -86,7 +86,7 @@ var DEMO = {
 			for(var j=0; j<10; j++){
 				var pfEnemy = new THREE.Mesh( pfEnemyMesh, pfEnemyMaterial );
 				this.ms_Scene.add(pfEnemy)
-				pfEnemy.position.set(50,450+((i-4)*100),((j-4)*100))
+				pfEnemy.position.set(50,1350+((i-4)*300),((j-4)*300))
 			}
 		}
 
@@ -94,7 +94,7 @@ var DEMO = {
 			for(var j=0; j<10; j++){
 				var pfEnemy = new THREE.Mesh( pfEnemyMesh, pfEnemyMaterial );
 				this.ms_Scene.add(pfEnemy)
-				pfEnemy.position.set(-50,450+((i-4)*100),((j-4)*100))
+				pfEnemy.position.set(-50,1350+((i-4)*300),((j-4)*300))
 			}
 		}
 
