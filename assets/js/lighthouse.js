@@ -4,7 +4,8 @@ function Lighthouse() {
     var container = new THREE.Object3D();
     function init() {
         colladaLoader.load(
-          "assets/models/lighthouse-textured.xml",
+          //"assets/models/lighthouse-textured.xml",
+          "assets/models/lighthouse/untitled.xml",
           // gdy załadowany
           function (collada) {
 

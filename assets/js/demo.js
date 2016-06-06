@@ -7,7 +7,11 @@ var DEMO = {
 	ms_Water: null,
 	ms_FilesDND: null,
 	ms_Raycaster: null,
-	ms_Clickable: [],
+	ms_Clickable_first: [],
+	ms_Clickable_second: [],
+	ms_Chosen: true,
+	ms_Last: null,
+	ms_Enemyloader: new THREE.ImageUtils.loadTexture('assets/img/wood.jpg'),
 
     enable: (function enable() {
         try {
@@ -55,48 +59,52 @@ var DEMO = {
 
 		//create playground
 
-		var pfMesh = new THREE.BoxGeometry( 300, 300, 25 );
-		var pfMaterial = new THREE.MeshBasicMaterial( {color: 0xffffff, side: THREE.DoubleSide, wireframe: true} );
-		var pfMaterial2 = new THREE.MeshBasicMaterial( {color: 0xffffff, side: THREE.DoubleSide, wireframe: true} );
+		var pfMesh = new THREE.BoxGeometry(300, 300, 25);
 
 			for(var i=0; i<10; i++){
-				for(var j=0;j<10;j++){
+			    for (var j = 0; j < 10; j++) {
+			        var pfMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, side: THREE.DoubleSide, wireframe: true });
 					var pf = new THREE.Mesh( pfMesh, pfMaterial );
 					this.ms_Scene.add(pf);
-					this.ms_Clickable.push(pf);
+					this.ms_Clickable_first.push(pf);
 					pf.rotation.x=Math.PI / 2;
 					pf.position.set(-1750+((j-4)*300),0,((i-4)*300))
 				}
 			}
 
-			for(var i=0; i<10; i++){
-				for(var j=0;j<10;j++){
-					var pf = new THREE.Mesh( pfMesh, pfMaterial2 );
-					this.ms_Scene.add(pf);
-					this.ms_Clickable.push(pf);
-					pf.rotation.x=Math.PI / 2;
-					pf.position.set(1450+((j-4)*300),0,((i-4)*300))
-				}
-			}
+			//for(var i=0; i<10; i++){
+			//    for (var j = 0; j < 10; j++) {
+			//        var pfMaterial2 = new THREE.MeshBasicMaterial({ color: 0xffffff, side: THREE.DoubleSide, wireframe: true });
+			//		var pf = new THREE.Mesh( pfMesh, pfMaterial2 );
+			//		this.ms_Scene.add(pf);
+			//		this.ms_Clickable_first.push(pf);
+			//		pf.rotation.x=Math.PI / 2;
+			//		pf.position.set(1450+((j-4)*300),0,((i-4)*300))
+			//	}
+			//}
 
 		var pfEnemyMesh = new THREE.BoxGeometry( 100, 300, 300 );
-		var pfEnemyMaterial = new THREE.MeshPhongMaterial({side: THREE.DoubleSide, map: THREE.ImageUtils.loadTexture('assets/img/wood.jpg') });
 
 
 
+		//for(var i=0; i<10; i++){
+		//    for (var j = 0; j < 10; j++) {
+		//		var pfEnemy = new THREE.Mesh( pfEnemyMesh, pfEnemyMaterial );
+		//		this.ms_Scene.add(pfEnemy)
+		//		this.ms_Clickable_second.push(pfEnemy);
+		//		pfEnemy.position.set(50,1350+((i-4)*300),((j-4)*300))
+		//	}
+	    //}
+		
+		var loader = new THREE.ImageUtils.loadTexture('assets/img/wood.jpg');
+        
 		for(var i=0; i<10; i++){
-			for(var j=0; j<10; j++){
-				var pfEnemy = new THREE.Mesh( pfEnemyMesh, pfEnemyMaterial );
+		    for (var j = 0; j < 10; j++) {
+		        var pfEnemyMaterial = new THREE.MeshPhongMaterial({ side: THREE.DoubleSide, map: loader });
+		        //var pfEnemyMaterial = copyMaterial(pfEnemyMaterial1);
+		        var pfEnemy = new THREE.Mesh(pfEnemyMesh, pfEnemyMaterial);
 				this.ms_Scene.add(pfEnemy)
-				this.ms_Clickable.push(pfEnemy);
-				pfEnemy.position.set(50,1350+((i-4)*300),((j-4)*300))
-			}
-		}
-
-		for(var i=0; i<10; i++){
-			for(var j=0; j<10; j++){
-				var pfEnemy = new THREE.Mesh( pfEnemyMesh, pfEnemyMaterial );
-				this.ms_Scene.add(pfEnemy)
+				this.ms_Clickable_second.push(pfEnemy);
 				pfEnemy.position.set(-50,1350+((i-4)*300),((j-4)*300))
 			}
 		}
@@ -116,7 +124,7 @@ var DEMO = {
 
 				// Mesh callback
 				DEMO.ms_FilesDND.callback = function() { window.open("http://www.filesdnd.com"); }
-				DEMO.ms_Clickable.push(DEMO.ms_FilesDND);
+				DEMO.ms_Clickable_second.push(DEMO.ms_FilesDND);
 
 				DEMO.ms_FilesDND.position.y = 1200;
 				DEMO.ms_Scene.add(DEMO.ms_FilesDND);
