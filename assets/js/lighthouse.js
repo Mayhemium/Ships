@@ -16,9 +16,30 @@ function Lighthouse() {
               // np podstawić materiał
 
               lighthouse.traverse(function (child) {
-                  //if (child instanceof THREE.Mesh) {
-                  //    console.log("mesh " + child.name);
-                  //}
+                  if (child instanceof THREE.Mesh) {
+                      console.log("mesh " + child.id);
+                      //glowna kolumna (marmur)
+                      if (child.id == 222) {
+                          child.material = new THREE.MeshPhongMaterial({ side: THREE.DoubleSide, map: THREE.ImageUtils.loadTexture('assets/js/modelTextures/lighthouseTextures/18_BaseColor.jpg') });
+                      }
+                      //drewno
+                      if (child.id == 224 || child.id == 226 || child.id == 228 || child.id == 232 || child.id == 240) {
+                          child.material = new THREE.MeshPhongMaterial({ side: THREE.DoubleSide, map: THREE.ImageUtils.loadTexture('assets/js/modelTextures/lighthouseTextures/8_BaseColor.jpg') });
+                      }
+                      //czerwony
+                      if (child.id == 230 || child.id == 234) {
+                          child.material = new THREE.MeshPhongMaterial({ side: THREE.DoubleSide, map: THREE.ImageUtils.loadTexture('assets/js/modelTextures/lighthouseTextures/19_BaseColor.jpg') });
+                      }
+                      //stal
+                      if (child.id == 236 || child.id == 238) {
+                          //child.material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+                          child.material = new THREE.MeshPhongMaterial({ side: THREE.DoubleSide, map: THREE.ImageUtils.loadTexture('assets/js/modelTextures/lighthouseTextures/stal.jpg') });
+                      }
+                      if (child.id == 242) {
+                          child.material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+                          //child.material = new THREE.MeshPhongMaterial({ side: THREE.DoubleSide, map: THREE.ImageUtils.loadTexture('assets/js/modelTextures/lighthouseTextures/stal.jpg') });
+                      }
+                  }
 
               });
 
