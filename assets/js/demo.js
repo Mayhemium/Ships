@@ -95,9 +95,9 @@ var DEMO = {
 		//		pfEnemy.position.set(50,1350+((i-4)*300),((j-4)*300))
 		//	}
 	    //}
-		
+
 		var loader = new THREE.ImageUtils.loadTexture('assets/img/wood.jpg');
-        
+
 		for(var i=0; i<10; i++){
 		    for (var j = 0; j < 10; j++) {
 		        var pfEnemyMaterial = new THREE.MeshPhongMaterial({ side: THREE.DoubleSide, map: loader });
@@ -132,10 +132,31 @@ var DEMO = {
 		});
 
 		var lH = new Lighthouse();
-    //console.log(lH)
     var lHMesh = new lH.getLighthouse();
     lHMesh.position.set(1500,0,-3000);
     this.ms_Scene.add(lHMesh);
+
+		//ladowanie statkow
+
+		var shipFirst = new ShipOne();
+		var shipFirstMesh = new shipFirst.getShipOne();
+		shipFirstMesh.position.set(-550,-75,-100);
+    this.ms_Scene.add(shipFirstMesh);
+
+		var shipSec = new ShipTwo();
+		var shipSecMesh = new shipSec.getShipTwo();
+		shipSecMesh.position.set(-1450,-50,-155);
+    this.ms_Scene.add(shipSecMesh);
+
+		var shipThird = new ShipThree();
+		var shipThirdMesh = new shipThird.getShipThree();
+		shipThirdMesh.position.set(-2050,-10,0);
+    this.ms_Scene.add(shipThirdMesh);
+
+		var shipFourth = new ShipFour();
+		var shipFourthMesh = new shipFourth.getShipFour();
+		shipFourthMesh.position.set(-2650,-20,100);
+    this.ms_Scene.add(shipFourthMesh);
 
 		// Create the water effect
 		this.ms_Water = new THREE.Water(this.ms_Renderer, this.ms_Camera, this.ms_Scene, {
