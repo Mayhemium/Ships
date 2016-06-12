@@ -30,8 +30,11 @@ function ShipTwo() {
               shipTwoContainer.add(shipTwo);
 
               //poprawki skali, położenia, obrotu
-              shipTwo.scale.set(700, 500, 600);
-              shipTwo.rotation.x = -Math.PI/2;
+              shipTwo.scale.set(950, 500, 600);
+              shipTwo.rotation.x = -Math.PI / 2;
+              shipTwo.position.set(0, 0, 400);
+              var axisHelper = new THREE.AxisHelper(500);
+              shipTwoContainer.add(axisHelper);
 
           },
           // gdy model jest pobierany z serwera
@@ -47,6 +50,17 @@ function ShipTwo() {
 
     this.getShipTwo = function () {
         return shipTwoContainer;
+    }
+
+    this.rotate = function (count) {
+        while (count > 0) {
+            shipTwoContainer.rotateY(Math.PI / 2);
+            count--;
+        }
+    }
+
+    this.setPosition = function (x, z) {
+        shipTwoContainer.position.set(-250 - 300 * x, -75, (z - 4) * 300);
     }
 
 }

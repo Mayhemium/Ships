@@ -20,9 +20,9 @@ function ShipThree() {
                       //console.log("mesh " + child.id);
 
                       //glowna kolumna (marmur jasny)
-                    /*  if (child.id == 222) {
-                          child.material = new THREE.MeshPhongMaterial({ side: THREE.DoubleSide, map: THREE.ImageUtils.loadTexture('assets/textures/lighthouseTextures/18_BaseColor.jpg') });
-                      }*/
+                      /*  if (child.id == 222) {
+                            child.material = new THREE.MeshPhongMaterial({ side: THREE.DoubleSide, map: THREE.ImageUtils.loadTexture('assets/textures/lighthouseTextures/18_BaseColor.jpg') });
+                        }*/
                   }
 
               });
@@ -30,8 +30,11 @@ function ShipThree() {
               shipThreeContainer.add(shipThree);
 
               //poprawki skali, położenia, obrotu
-              shipThree.scale.set(700, 400, 800);
-              shipThree.rotation.x = -Math.PI/2;
+              shipThree.scale.set(950, 400, 800);
+              shipThree.rotation.x = -Math.PI / 2;
+              shipThree.position.set(0, 0, 300);
+              var axisHelper = new THREE.AxisHelper(500);
+              shipThreeContainer.add(axisHelper);
 
           },
           // gdy model jest pobierany z serwera
@@ -47,6 +50,17 @@ function ShipThree() {
 
     this.getShipThree = function () {
         return shipThreeContainer;
+    }
+
+    this.rotate = function (count) {
+        while (count > 0) {
+            shipThreeContainer.rotateY(Math.PI / 2);
+            count--;
+        }
+    }
+
+    this.setPosition = function (x, z) {
+        shipThreeContainer.position.set(-250 - 300 * x, -75, (z - 4) * 300);
     }
 
 }

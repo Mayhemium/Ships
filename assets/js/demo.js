@@ -9,9 +9,9 @@ var DEMO = {
 	ms_Raycaster: null,
 	ms_Clickable_first: [],
 	ms_Clickable_second: [],
-	ms_Chosen: true,
-	ms_Last: null,
-	ms_Enemyloader: new THREE.ImageUtils.loadTexture('assets/img/wood.jpg'),
+	ms_Chosen: false,
+	ms_LastObject: null,
+	ms_LastMaterial: null,
 
     enable: (function enable() {
         try {
@@ -139,25 +139,37 @@ var DEMO = {
 		//ladowanie statkow
 
 		var shipFirst = new ShipOne();
-		var shipFirstMesh = new shipFirst.getShipOne();
-		shipFirstMesh.position.set(-550,-75,-100);
-    this.ms_Scene.add(shipFirstMesh);
-
+		shipFirstMesh = new shipFirst.getShipOne();
+		shipFirstMesh.position.set(-250, -75, 2100);
+		//shipFirst.setPosition(1,1);                   ustawienie statku na planszy (x,z)
+		//shipFirst.rotate(3);                          obrot statku o 90 stopni z ruchem wskazowek zegara, zmienna - ilosc obrotow
+		this.ms_Scene.add(shipFirstMesh);
+		this.ms_Clickable_first.push(shipFirstMesh);
+        
 		var shipSec = new ShipTwo();
 		var shipSecMesh = new shipSec.getShipTwo();
-		shipSecMesh.position.set(-1450,-50,-155);
-    this.ms_Scene.add(shipSecMesh);
-
+		shipSecMesh.position.set(-850, -75, 2100);
+	    //shipSec.setPosition(1,1);                   
+		//shipSec.rotate(3);
+		this.ms_Scene.add(shipSecMesh);
+		this.ms_Clickable_first.push(shipSecMesh);
+	    
 		var shipThird = new ShipThree();
 		var shipThirdMesh = new shipThird.getShipThree();
-		shipThirdMesh.position.set(-2050,-10,0);
-    this.ms_Scene.add(shipThirdMesh);
-
+		shipThirdMesh.position.set(-1450, -25, 2100);
+	    //shipThird.setPosition(1,1);                   
+		//shipThird.rotate(3);
+		this.ms_Scene.add(shipThirdMesh);
+		this.ms_Clickable_first.push(shipThirdMesh);
+	    
 		var shipFourth = new ShipFour();
 		var shipFourthMesh = new shipFourth.getShipFour();
-		shipFourthMesh.position.set(-2650,-20,100);
-    this.ms_Scene.add(shipFourthMesh);
-
+		shipFourthMesh.position.set(-2050, -20, 2100);
+	    //shipFourth.setPosition(1,1);                   
+	    //shipFourth.rotate(3);
+		this.ms_Scene.add(shipFourthMesh);
+		this.ms_Clickable_first.push(shipFourthMesh);
+        
 		// Create the water effect
 		this.ms_Water = new THREE.Water(this.ms_Renderer, this.ms_Camera, this.ms_Scene, {
 			textureWidth: 512,

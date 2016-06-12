@@ -2,6 +2,7 @@ function ShipOne() {
     var colladaLoader = new THREE.ColladaLoader();
     var shipOne;
     var shipContainer = new THREE.Object3D();
+    shipContainer.name = "mine";
     function init() {
         colladaLoader.load(
           //"assets/models/lighthouse-textured.xml",
@@ -31,7 +32,10 @@ function ShipOne() {
 
               //poprawki skali, położenia, obrotu
               shipOne.scale.set(1500, 1200, 2000);
-              shipOne.rotation.x = -Math.PI/2;
+              shipOne.rotation.x = -Math.PI / 2;
+              shipOne.position.set(-5, 0, 800);
+              var axisHelper = new THREE.AxisHelper(500);
+              shipContainer.add(axisHelper);
 
           },
           // gdy model jest pobierany z serwera
@@ -47,6 +51,17 @@ function ShipOne() {
 
     this.getShipOne = function () {
         return shipContainer;
+    }
+
+    this.rotate = function (count) {
+        while (count > 0) {
+            shipContainer.rotateY(Math.PI / 2);
+            count--;
+        }
+    }
+
+    this.setPosition = function (x, z) {
+        shipContainer.position.set(-250-300*x, -75, (z - 4) * 300);
     }
 
 }
