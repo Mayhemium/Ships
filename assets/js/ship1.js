@@ -18,7 +18,7 @@ function ShipOne() {
 
               shipOne.traverse(function (child) {
                   if (child instanceof THREE.Mesh) {
-                      console.log("mesh " + child.id);
+                      //console.log("mesh " + child.id);
 
                       //glowna kolumna (marmur jasny)
                     /*  if (child.id == 222) {
@@ -34,8 +34,8 @@ function ShipOne() {
               shipOne.scale.set(1500, 1200, 2000);
               shipOne.rotation.x = -Math.PI / 2;
               shipOne.position.set(-5, 0, 800);
-              var axisHelper = new THREE.AxisHelper(500);
-              shipContainer.add(axisHelper);
+              //var axisHelper = new THREE.AxisHelper(500);
+              //shipContainer.add(axisHelper);
 
           },
           // gdy model jest pobierany z serwera
@@ -43,21 +43,18 @@ function ShipOne() {
 	 //i wykonanie jakiejś czynności dopiero po załadowaniu
 
           function (e) {
-              console.log("model " + e.loaded + "-" + e.total);
+              //console.log("model " + e.loaded + "-" + e.total);
           }
       );
     }
     init();
 
-    this.getShipOne = function () {
+    this.getShip = function () {
         return shipContainer;
     }
 
     this.rotate = function (count) {
-        while (count > 0) {
-            shipContainer.rotateY(Math.PI / 2);
-            count--;
-        }
+            shipContainer.rotation.y = count*(Math.PI / 2);
     }
 
     this.setPosition = function (x, z) {

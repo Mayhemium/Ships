@@ -17,7 +17,7 @@ function Lighthouse() {
 
               lighthouse.traverse(function (child) {
                   if (child instanceof THREE.Mesh) {
-                      console.log("mesh " + child.id);
+                      //console.log("mesh " + child.id);
                       ///ZAKOMENTOWAŁAM NA RAZIE, BO MULI JAK OSTATNI SKURWYSYN
                       //266 nieoteksturowany!!!!!
                       //glowna kolumna (marmur jasny)
@@ -60,7 +60,7 @@ function Lighthouse() {
 	 //i wykonanie jakiejś czynności dopiero po załadowaniu
 
           function (e) {
-              console.log("model " + e.loaded + "-" + e.total);
+              //console.log("model " + e.loaded + "-" + e.total);
           }
       );
     }

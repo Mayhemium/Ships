@@ -33,8 +33,8 @@ function ShipFour() {
               shipFour.scale.set(950, 450, 800);
               shipFour.rotation.x = -Math.PI / 2;
               shipFour.position.set(0, 0, 100);
-              var axisHelper = new THREE.AxisHelper(500);
-              shipFourContainer.add(axisHelper);
+              //var axisHelper = new THREE.AxisHelper(500);
+              //shipFourContainer.add(axisHelper);
 
           },
           // gdy model jest pobierany z serwera
@@ -48,19 +48,16 @@ function ShipFour() {
     }
     init();
 
-    this.getShipFour = function () {
+    this.getShip = function () {
         return shipFourContainer;
     }
 
     this.rotate = function (count) {
-        while (count > 0) {
-            shipFourContainer.rotateY(Math.PI / 2);
-            count--;
-        }
+        shipFourContainer.rotation.y = count * (Math.PI / 2);
     }
 
     this.setPosition = function (x, z) {
-        shipFourContainer.position.set(-250 - 300 * x, -75, (z - 4) * 300);
+        shipFourContainer.position.set(-250 - 300 * x, -20, (z - 4) * 300);
     }
 
 }

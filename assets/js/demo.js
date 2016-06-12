@@ -10,8 +10,12 @@ var DEMO = {
 	ms_Clickable_first: [],
 	ms_Clickable_second: [],
 	ms_Chosen: false,
-	ms_LastObject: null,
-	ms_LastMaterial: null,
+	ms_LastMaterial: new THREE.MeshBasicMaterial({ color: 0xffffff, side: THREE.DoubleSide, wireframe: true }),
+	ms_ShipSelected: null,
+	ms_ShipSize: null,
+	ms_CurrentRotation: 0,
+	ms_Placeable: null,
+    ms_Ships:[],
 
     enable: (function enable() {
         try {
@@ -68,7 +72,9 @@ var DEMO = {
 					this.ms_Scene.add(pf);
 					this.ms_Clickable_first.push(pf);
 					pf.rotation.x=Math.PI / 2;
-					pf.position.set(-1750+((j-4)*300),0,((i-4)*300))
+					pf.position.set(-1750 + ((j - 4) * 300), 0, ((i - 4) * 300))
+					pf.name = "x:" + (9 - j) + "z:" + i;
+					pf.occupied = false;
 				}
 			}
 
@@ -97,7 +103,7 @@ var DEMO = {
 	    //}
 
 		var loader = new THREE.ImageUtils.loadTexture('assets/img/wood.jpg');
-
+		this.ms_Wood = new THREE.MeshPhongMaterial({ side: THREE.DoubleSide, map: loader });
 		for(var i=0; i<10; i++){
 		    for (var j = 0; j < 10; j++) {
 		        var pfEnemyMaterial = new THREE.MeshPhongMaterial({ side: THREE.DoubleSide, map: loader });
@@ -105,7 +111,8 @@ var DEMO = {
 		        var pfEnemy = new THREE.Mesh(pfEnemyMesh, pfEnemyMaterial);
 				this.ms_Scene.add(pfEnemy)
 				this.ms_Clickable_second.push(pfEnemy);
-				pfEnemy.position.set(-50,1350+((i-4)*300),((j-4)*300))
+				pfEnemy.position.set(-50, 1350 + ((i - 4) * 300), ((j - 4) * 300))
+				pfEnemy.name = "attack_x:"+i+"y:"+j;
 			}
 		}
 
@@ -132,43 +139,58 @@ var DEMO = {
 		});
 
 		var lH = new Lighthouse();
-    var lHMesh = new lH.getLighthouse();
-    lHMesh.position.set(1500,0,-3000);
-    this.ms_Scene.add(lHMesh);
+        var lHMesh = new lH.getLighthouse();
+        lHMesh.position.set(1500,0,-3000);
+        this.ms_Scene.add(lHMesh);
 
-		//ladowanie statkow
+		    //ladowanie statkow
 
-		var shipFirst = new ShipOne();
-		shipFirstMesh = new shipFirst.getShipOne();
-		shipFirstMesh.position.set(-250, -75, 2100);
+        var shipFirst = new ShipOne();
+        var shipFirstMesh = shipFirst.getShip();
+        shipFirstMesh.reference = shipFirst;
+        shipFirstMesh.name = "ship6";
+        shipFirstMesh.position.set(-250, -75, 2100);
 		//shipFirst.setPosition(1,1);                   ustawienie statku na planszy (x,z)
 		//shipFirst.rotate(3);                          obrot statku o 90 stopni z ruchem wskazowek zegara, zmienna - ilosc obrotow
 		this.ms_Scene.add(shipFirstMesh);
 		this.ms_Clickable_first.push(shipFirstMesh);
-        
+		this.ms_ShipSelected = shipFirst;
+		this.ms_ShipSize = 6;
+		this.ms_Ships.push(shipFirstMesh);
+
+
 		var shipSec = new ShipTwo();
-		var shipSecMesh = new shipSec.getShipTwo();
+		var shipSecMesh = shipSec.getShip();
+		shipSecMesh.reference = shipSec;
+		shipSecMesh.name = "ship4";
 		shipSecMesh.position.set(-850, -75, 2100);
 	    //shipSec.setPosition(1,1);                   
 		//shipSec.rotate(3);
 		this.ms_Scene.add(shipSecMesh);
 		this.ms_Clickable_first.push(shipSecMesh);
+		this.ms_Ships.push(shipSecMesh);
 	    
 		var shipThird = new ShipThree();
-		var shipThirdMesh = new shipThird.getShipThree();
+		var shipThirdMesh = shipThird.getShip();
+		shipThirdMesh.reference = shipThird;
+		shipThirdMesh.name = "ship3";
 		shipThirdMesh.position.set(-1450, -25, 2100);
 	    //shipThird.setPosition(1,1);                   
 		//shipThird.rotate(3);
 		this.ms_Scene.add(shipThirdMesh);
 		this.ms_Clickable_first.push(shipThirdMesh);
+		this.ms_Ships.push(shipThirdMesh);
 	    
 		var shipFourth = new ShipFour();
-		var shipFourthMesh = new shipFourth.getShipFour();
+		var shipFourthMesh = shipFourth.getShip();
+		shipFourthMesh.reference = shipFourth;
+		shipFourthMesh.name = "ship2";
 		shipFourthMesh.position.set(-2050, -20, 2100);
 	    //shipFourth.setPosition(1,1);                   
 	    //shipFourth.rotate(3);
 		this.ms_Scene.add(shipFourthMesh);
 		this.ms_Clickable_first.push(shipFourthMesh);
+		this.ms_Ships.push(shipFourthMesh);
         
 		// Create the water effect
 		this.ms_Water = new THREE.Water(this.ms_Renderer, this.ms_Camera, this.ms_Scene, {
