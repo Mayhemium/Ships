@@ -148,6 +148,7 @@ var DEMO = {
         var shipFirst = new ShipOne();
         var shipFirstMesh = shipFirst.getShip();
         shipFirstMesh.reference = shipFirst;
+        shipFirstMesh.mesh = shipFirstMesh;
         shipFirstMesh.name = "ship6";
         shipFirstMesh.position.set(-250, -75, 2100);
 		//shipFirst.setPosition(1,1);                   ustawienie statku na planszy (x,z)
@@ -155,6 +156,7 @@ var DEMO = {
 		this.ms_Scene.add(shipFirstMesh);
 		this.ms_Clickable_first.push(shipFirstMesh);
 		this.ms_ShipSelected = shipFirst;
+		this.ms_ShipSelectedMesh = shipFirstMesh;
 		this.ms_ShipSize = 6;
 		this.ms_Ships.push(shipFirstMesh);
 
@@ -162,6 +164,7 @@ var DEMO = {
 		var shipSec = new ShipTwo();
 		var shipSecMesh = shipSec.getShip();
 		shipSecMesh.reference = shipSec;
+		shipSecMesh.mesh = shipSecMesh;
 		shipSecMesh.name = "ship4";
 		shipSecMesh.position.set(-850, -75, 2100);
 	    //shipSec.setPosition(1,1);                   
@@ -173,6 +176,7 @@ var DEMO = {
 		var shipThird = new ShipThree();
 		var shipThirdMesh = shipThird.getShip();
 		shipThirdMesh.reference = shipThird;
+		shipThirdMesh.mesh = shipThirdMesh;
 		shipThirdMesh.name = "ship3";
 		shipThirdMesh.position.set(-1450, -25, 2100);
 	    //shipThird.setPosition(1,1);                   
@@ -184,6 +188,7 @@ var DEMO = {
 		var shipFourth = new ShipFour();
 		var shipFourthMesh = shipFourth.getShip();
 		shipFourthMesh.reference = shipFourth;
+		shipFourthMesh.mesh = shipFourthMesh;
 		shipFourthMesh.name = "ship2";
 		shipFourthMesh.position.set(-2050, -20, 2100);
 	    //shipFourth.setPosition(1,1);                   

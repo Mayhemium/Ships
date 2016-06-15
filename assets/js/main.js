@@ -14,52 +14,65 @@ function onDocumentMouseDown(event) {
     var intersects1 = DEMO.ms_Chosen ? DEMO.ms_Raycaster.intersectObjects(DEMO.ms_Clickable_second) : DEMO.ms_Raycaster.intersectObjects(DEMO.ms_Clickable_first, true); //wybor elementow do klikania na podstawie DEMO.ms_Chosen
 
     if (intersects1.length > 0) {
-        console.log(intersects1[0].object)
+        //console.log(intersects1[0].object)
         var object = intersects1[0].object;
-        try{
-            while (object.name.indexOf("ship") == -1) {
-                object = object.parent;
-            }
-            DEMO.ms_ShipSize = parseInt(object.name.split("ship")[1]);
-            DEMO.ms_CurrentRotation = 0;
-            DEMO.ms_ShipSelected = object.reference;
-        } catch (e) { }
-        if(DEMO.ms_Placeable)
-            try{
-                var position = {
-                    x: intersects1[0].object.name.split("x:")[1].split("z:")[0],
-                    z: intersects1[0].object.name.split("x:")[1].split("z:")[1]
+        if (!DEMO.ms_Chosen) {
+            try {
+                while (object.name.indexOf("ship") == -1) {
+                    object = object.parent;
                 }
-                DEMO.ms_ShipSelected.setPosition(position.x, position.z);
-                DEMO.ms_ShipSelected.rotate(DEMO.ms_CurrentRotation);
-                
-                for (var i = (DEMO.ms_ShipSize - 1) ; i >= 0 ; i--) {
-                    var marked;
-                    switch (DEMO.ms_CurrentRotation) {
-                        case 0:
-                            marked = DEMO.ms_Scene.getObjectByName("x:" + position.x + "z:" + (parseInt(position.z) + i));
-                            break;
-                        case 1:
-                            marked = DEMO.ms_Scene.getObjectByName("x:" + (parseInt(position.x) - i) + "z:" + position.z);
-                            break;
-                        case 2:
-                            marked = DEMO.ms_Scene.getObjectByName("x:" + position.x + "z:" + (parseInt(position.z) - i));
-                            break;
-                        case 3:
-                            marked = DEMO.ms_Scene.getObjectByName("x:" + (parseInt(position.x) + i) + "z:" + position.z);
-                            break;
+                DEMO.ms_ShipSize = parseInt(object.name.split("ship")[1]);
+                DEMO.ms_CurrentRotation = 0;
+                DEMO.ms_ShipSelected = object.reference;
+                DEMO.ms_ShipSelectedMesh = object.mesh;
+            } catch (e) { }
+            if (DEMO.ms_Placeable)
+                try {
+                    var position = {
+                        x: intersects1[0].object.name.split("x:")[1].split("z:")[0],
+                        z: intersects1[0].object.name.split("x:")[1].split("z:")[1]
                     }
-                    marked.occupied = true;
+                    DEMO.ms_ShipSelected.setPosition(position.x, position.z);
+                    DEMO.ms_ShipSelected.rotate(DEMO.ms_CurrentRotation);
+
+                    for (var i = (DEMO.ms_ShipSize - 1) ; i >= 0 ; i--) {
+                        var marked;
+                        switch (DEMO.ms_CurrentRotation) {
+                            case 0:
+                                marked = DEMO.ms_Scene.getObjectByName("x:" + position.x + "z:" + (parseInt(position.z) + i));
+                                break;
+                            case 1:
+                                marked = DEMO.ms_Scene.getObjectByName("x:" + (parseInt(position.x) - i) + "z:" + position.z);
+                                break;
+                            case 2:
+                                marked = DEMO.ms_Scene.getObjectByName("x:" + position.x + "z:" + (parseInt(position.z) - i));
+                                break;
+                            case 3:
+                                marked = DEMO.ms_Scene.getObjectByName("x:" + (parseInt(position.x) + i) + "z:" + position.z);
+                                break;
+                        }
+                        marked.occupied = true;
+                    }
+                    if (DEMO.ms_Ships.indexOf(DEMO.ms_ShipSelectedMesh) > -1) {
+                        DEMO.ms_Ships.splice(DEMO.ms_Ships.indexOf(DEMO.ms_ShipSelectedMesh), 1);
+                    }
+                    if (DEMO.ms_Ships.length == 0) {
+                        DEMO.ms_Chosen = true;
+                        net.emit("ready");
+                    }
+
+                    DEMO.ms_ShipSelected = null;
+                    DEMO.ms_ShipSize = null;
+
+                } catch (e) { 
+                //console.log(e.message) 
                 }
-
-                DEMO.ms_Ships.splice(DEMO.ms_Clickable_first.indexOf(DEMO.ms_ShipSelected), 1);
-                if (DEMO.ms_Ships.length == 0) 
-                    DEMO.ms_Chosen = true;
-                
-                DEMO.ms_ShipSelected = null;
-                DEMO.ms_ShipSize = null;
-
-            } catch (e) { console.log(e.message) }
+        } else if(DEMO.myturn){
+            net.emit("attack", {
+                y: object.name.split("x:")[1].split("y:")[0],
+                x: object.name.split("x:")[1].split("y:")[1]
+            });
+        }
     }
 }
 
@@ -84,6 +97,10 @@ function onDocumentMouseMove(event) {
             DEMO.ms_LastMaterial = object.material.clone();
             intersects[0].object.material.color = { r: 0, g: 0, b: 1 };
             DEMO.ms_LastObject = [intersects[0].object];
+            net.emit("move", {
+                y: object.name.split("x:")[1].split("y:")[0],
+                x: object.name.split("x:")[1].split("y:")[1]
+            });
         } else {
 
 
@@ -172,12 +189,12 @@ function onDocumentKeyDown(event) {
 }
 
 $(function() {
-	WINDOW.initialize();
-
-	document.addEventListener('click', onDocumentMouseDown, false);
-	document.addEventListener('mousemove', onDocumentMouseMove, false);
-	document.addEventListener('keydown', onDocumentKeyDown, false);
-
+    WINDOW.initialize();
+    DEMO.raycastinit=function(){
+        document.addEventListener('mousedown', onDocumentMouseDown, false);
+        document.addEventListener('mousemove', onDocumentMouseMove, false);
+        document.addEventListener('keydown', onDocumentKeyDown, false);
+    }
 	var parameters = {
 		alea: RAND_MT,
 		generator: PN_GENERATOR,
